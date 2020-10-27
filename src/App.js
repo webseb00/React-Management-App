@@ -1,25 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import MenuBar from './components/MenuBar';
+import Dashboard from './components/Dashboard';
+import Project from './components/Project';
+import PageNotFound from './components/PageNotFound';
+import Employees from './components/Employees';
+import AddProject from './components/AddProject';
+import Container from '@material-ui/core/Container';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MenuBar />
+      <Container fixed>
+        <main className="main">
+          <Switch>
+            <Route exact path="/">
+              <Dashboard />
+            </Route>
+            <Route path="/project/add">
+              <AddProject />
+            </Route>
+            <Route path="/projects">
+              <Project />
+            </Route>
+            <Route path="/employees">
+              <Employees />
+            </Route>
+            <Route path="*">
+              <PageNotFound />
+            </Route>
+          </Switch>
+        </main>
+      </Container>
+    </>
   );
 }
 
