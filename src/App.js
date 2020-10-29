@@ -12,26 +12,24 @@ function App() {
   return (
     <>
       <MenuBar />
-      <Container fixed>
-        <main className="main">
-          <Switch>
-            <Route exact path="/">
-              <Dashboard />
-            </Route>
-            <Route path="/project/add">
-              <AddProject />
-            </Route>
-            <Route path="/projects">
-              <Project />
-            </Route>
-            <Route path="/employees">
-              <Employees />
-            </Route>
-            <Route path="*">
-              <PageNotFound />
-            </Route>
-          </Switch>
-        </main>
+      <Container maxWidth="md">
+        <Switch>
+          <Route exact path="/">
+            <Dashboard />
+          </Route>
+          <Route path="/project/add">
+            <AddProject />
+          </Route>
+          <Route path="/projects">
+            <Project />
+          </Route>
+          <Route path="/employees">
+            <Employees />
+          </Route>
+          <Route path="*">
+            <PageNotFound />
+          </Route>
+        </Switch>
       </Container>
     </>
   );

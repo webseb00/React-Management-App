@@ -10,11 +10,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import PersonIcon from '@material-ui/icons/Person';
 import { Link as RouterLink } from 'react-router-dom';
-import { palette } from '@material-ui/system';
 
 export default function MenuBar() {
   return (
-    <AppBar style={{ background: '#1976d2' }} position="static">
+    <AppBar position="static">
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu">
           <MenuIcon />
