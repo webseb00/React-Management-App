@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import DateFnsUtils from '@date-io/date-fns'; // choose your lib
+import { ProjectContext } from '../context/ProjectContext';
+import DateFnsUtils from '@date-io/date-fns'; 
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AddProject() {
+  // get context from ProjectContext
+  const [state, dispatch] = useContext(ProjectContext);
   let history = useHistory();
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
@@ -35,6 +38,7 @@ export default function AddProject() {
   const [startDate, setStartDate] = useState(new Date());
   // set ending date for project
   const [endDate, setEndDate] = useState(new Date());
+  // add input text content
   const [field, setField] = useState({
     project_name: '',
     project_client: '',
@@ -44,6 +48,19 @@ export default function AddProject() {
   const handleSubmit = e => {
     e.preventDefault();
 
+    const data = {
+      ...field,
+      startDate,
+      endDate,
+      completed: checked,
+      id: uuidv4()
+    }
+
+    dispatch({
+      type: 'ADD_PROJECT',
+      payload: data
+    });
+ 
   }
 
   const handleChange = e => {

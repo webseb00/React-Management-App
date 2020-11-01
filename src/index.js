@@ -1,26 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from './MuiTheme/theme';
 import App from './App';
 import { ProjectContextProvider } from './context/ProjectContext';
 import { debugContextDevtool } from 'react-context-devtool';
 import './style.css';
 
-const root = document.querySelector('#root');
+const container = document.querySelector('#root');
 
 ReactDOM.render(
   <ProjectContextProvider>
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ThemeProvider>
+    </MuiThemeProvider>
   </ProjectContextProvider>,
-  root
+  container
 );
 
-// debugContextDevtool(root, {
-//   disable: process.env.NODE_ENV === "production"
-// });
+// debugContextDevtool(container);

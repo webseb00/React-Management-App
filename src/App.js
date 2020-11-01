@@ -6,6 +6,7 @@ import Project from './components/Project';
 import PageNotFound from './components/PageNotFound';
 import Employees from './components/Employees';
 import AddProject from './components/AddProject';
+import EditProject from './components/EditProject';
 import Container from '@material-ui/core/Container';
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/project/add">
             <AddProject />
+          </Route>
+          <Route path="/project/:id">
+            <EditProject />
           </Route>
           <Route path="/projects">
             <Project />

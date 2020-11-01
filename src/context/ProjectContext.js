@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, createContext } from 'react';
 
 const initialState = {
-  projects: []
+  projects: localStorage.getItem('projects') ? JSON.parse(localStorage.getItem('projects')) : []
 };
 
 export const ProjectContext = createContext(initialState);
@@ -10,6 +10,9 @@ const reducer = (state, action) => {
   switch(action.type) {
     case 'ADD_PROJECT':
       return { projects: [...state.projects, action.payload] }
+    case 'EDIT_PROJECT':
+      const filterProjects = state.projects.filter(el => el.id !== action.payload.id);
+      return { projects: [...filterProjects, action.payload] }
     default:
       return initialState;
   }
@@ -18,6 +21,10 @@ const reducer = (state, action) => {
 export const ProjectContextProvider = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { projects } = state;
+
+  useEffect(() => {
+    localStorage.setItem('projects', JSON.stringify(projects));
+  }, [projects]);
 
   return (
     <ProjectContext.Provider value={[state, dispatch]}>
