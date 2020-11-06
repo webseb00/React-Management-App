@@ -11,8 +11,11 @@ const reducer = (state, action) => {
     case 'ADD_PROJECT':
       return { projects: [...state.projects, action.payload] }
     case 'EDIT_PROJECT':
-      const filterProjects = state.projects.filter(el => el.id !== action.payload.id);
-      return { projects: [...filterProjects, action.payload] }
+      const editProjects = state.projects.filter(el => el.id !== action.payload.id);
+      return { projects: [...editProjects, action.payload] }
+    case 'REMOVE_PROJECT': 
+      const removeProjects = state.projects.filter(el => el.id !== action.payload.id);
+      return { projects: [...removeProjects] }
     default:
       return initialState;
   }

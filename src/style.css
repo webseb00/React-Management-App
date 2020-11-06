@@ -3,3 +3,44 @@
   margin: 0;
   padding: 0;
 }
+
+body {
+  font-family: 'Robot', sans-serif;
+}
+
+.MuiContainer-root {
+  margin: 40px 0;
+}
+
+dt {
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+
+.project-content {
+  padding: 15px;
+}
+
+.project-content > div {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.project-content dl:not(:last-child) {
+  flex-basis: 50%;
+}
+
+.project-findAndAdd {
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.project-findAndAdd .MuiTextField-root {
+  margin: 0 8px;
+}
+
+.project-findAndAdd .MuiButtonBase-root {
+  margin-left: 3px;
+}
+

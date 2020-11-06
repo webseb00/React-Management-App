@@ -24,7 +24,7 @@ export default function DashboardCard({ project_name, id }) {
   return (  
     <Grid 
       item 
-      xs={12} 
+      xs={10} 
       sm={6} 
       md={4} 
       className={classes.root}

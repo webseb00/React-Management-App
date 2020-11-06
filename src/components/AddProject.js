@@ -50,16 +50,13 @@ export default function AddProject() {
 
     const data = {
       ...field,
-      startDate,
-      endDate,
+      startDate: startDate.toString(),
+      endDate: endDate.toString(),
       completed: checked,
       id: uuidv4()
     }
 
-    dispatch({
-      type: 'ADD_PROJECT',
-      payload: data
-    });
+    dispatch({ type: 'ADD_PROJECT', payload: data });
  
   }
 

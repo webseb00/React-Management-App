@@ -67,8 +67,8 @@ export default function EditProject(props) {
 
     const newData = {
       ...field,
-      startDate,
-      endDate,
+      startDate: startDate.toString(),
+      endDate: endDate.toString(),
       completed: checked
     }
 
