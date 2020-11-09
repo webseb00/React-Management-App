@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
+import { AlertContext } from '../context/AlertContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AddProject() {
   // get context from ProjectContext
   const [state, dispatch] = useContext(ProjectContext);
+  const [alertState, alertDispatch] = useContext(AlertContext);
   let history = useHistory();
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
@@ -57,7 +59,17 @@ export default function AddProject() {
     }
 
     dispatch({ type: 'ADD_PROJECT', payload: data });
- 
+
+    alertDispatch({
+      type: 'SHOW_ALERT',
+      payload: {
+        active: true,
+        message: 'Project was added sucessfully!',
+        variant: 'filled',
+        severity: 'success'
+      }
+    });
+    
   }
 
   const handleChange = e => {
@@ -150,6 +162,7 @@ export default function AddProject() {
             color="primary"
             type="submit"
             disabled={false}
+            onClick={() => history.goBack()}
           >
             Save
           </Button>

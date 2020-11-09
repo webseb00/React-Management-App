@@ -9,7 +9,7 @@ body {
 }
 
 .MuiContainer-root {
-  margin: 40px 0;
+  margin: 20px 0;
 }
 
 dt {
@@ -44,3 +44,6 @@ dt {
   margin-left: 3px;
 }
 
+.alert-bar {
+  margin-bottom: 20px;
+}
