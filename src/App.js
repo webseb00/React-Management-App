@@ -15,16 +15,13 @@ function App() {
 
   const [alertState, alertDispatch] = useContext(AlertContext);
   const { active } = alertState;
-  
   return (
     <>
       <MenuBar />
       <Container maxWidth="md">
-      { active ? 
-        <AlertBar 
-          {...alertState}
-        /> 
-      : ''} 
+      {
+        active ? <AlertBar {...alertState} /> : '' 
+      }
         <Switch>
           <Route exact path="/">
             <Dashboard />

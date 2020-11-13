@@ -59,17 +59,30 @@ export default function AddProject() {
     }
 
     dispatch({ type: 'ADD_PROJECT', payload: data });
-
+    // show alert message after adding project
     alertDispatch({
       type: 'SHOW_ALERT',
       payload: {
         active: true,
         message: 'Project was added sucessfully!',
-        variant: 'filled',
+        variant: 'outlined',
         severity: 'success'
       }
     });
-    
+    // remove alert message after 6 seconds
+    setTimeout(() => {
+      alertDispatch({
+        type: 'REMOVE_ALERT',
+        payload: {
+          active: false,
+          message: '',
+          variant: '',
+          severity: ''
+        }
+      });
+    }, 6000);
+
+    history.goBack();
   }
 
   const handleChange = e => {
@@ -162,7 +175,6 @@ export default function AddProject() {
             color="primary"
             type="submit"
             disabled={false}
-            onClick={() => history.goBack()}
           >
             Save
           </Button>

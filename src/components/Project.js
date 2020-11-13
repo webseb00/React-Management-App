@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import ProjectItem from './ProjectItem';
 import ProjectDetails from './ProjectDetails';
 import TextField from '@material-ui/core/TextField';
-import AlertBar from './AlertBar';
 import { AlertContext } from '../context/AlertContext';
 
 export default function Project() {
@@ -35,28 +34,45 @@ export default function Project() {
   const getProjectItems = () => {
     const { projects } = state;
     return projects.map((el, index) => <ProjectItem 
-                                      getProjectID={getProjectItemID}
-                                      key={el.id}
-                                      id={el.id} 
-                                      index={index} 
-                                      {...el} 
+                                        getProjectID={getProjectItemID}
+                                        key={el.id}
+                                        id={el.id} 
+                                        index={index} 
+                                        {...el} 
                                       /> ); 
   }
 
   const removeSelectedProject = id => {
+
+    const confirm = window.confirm('Are you sure? Your project will not be available anymore.');
+    if(!confirm) { return false; };
+    //  if confirm variable is true, remove project from local storage
     dispatch({
       type: 'REMOVE_PROJECT',
       payload: { id }
     });
+    // show alert message after adding project
     alertDispatch({
       type: 'SHOW_ALERT',
       payload: {
         active: true,
         message: 'Project was removed sucessfully!',
-        variant: 'filled',
-        severity: 'warning'
+        variant: 'outlined',
+        severity: 'error'
       }
     });
+    // remove alert message after 6 seconds
+    setTimeout(() => {
+      alertDispatch({
+        type: 'REMOVE_ALERT',
+        payload: {
+          active: false,
+          message: '',
+          variant: '',
+          severity: ''
+        }
+      });
+    }, 6000);
   }
 
   return (

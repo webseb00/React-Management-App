@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
+import { AlertContext } from '../context/AlertContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditProject(props) {
   const { id } = useParams();
+  // project context
   const [state, dispatch] = useContext(ProjectContext);
+  // alert context
+  const [alertState, alertDispatch] = useContext(AlertContext);
 
   useEffect(() => {
     const { projects } = state;
@@ -73,6 +77,30 @@ export default function EditProject(props) {
     }
 
     dispatch({ type: 'EDIT_PROJECT', payload: { ...newData, id} });
+    // show alert message after adding project
+    alertDispatch({
+      type: 'SHOW_ALERT',
+      payload: {
+        active: true,
+        message: 'Project was updated sucessfully!',
+        variant: 'outlined',
+        severity: 'info'
+      }
+    });
+    // remove alert message after 6 seconds
+    setTimeout(() => {
+      alertDispatch({
+        type: 'REMOVE_ALERT',
+        payload: {
+          active: false,
+          message: '',
+          variant: '',
+          severity: ''
+        }
+      });
+    }, 6000);
+
+    history.goBack();
   }
   
   const handleChange = e => {

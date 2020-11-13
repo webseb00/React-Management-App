@@ -13,17 +13,11 @@ const reducer = (alertState, action) => {
   switch(action.type) {
     case 'SHOW_ALERT':
       return { 
-        active: action.payload.active,
-        message: action.payload.message,
-        variant: action.payload.variant,
-        severity: action.payload.severity
+        ...action.payload
       };
     case 'REMOVE_ALERT': 
       return {
-        active: false,
-        message: '',
-        variant: '',
-        severity: ''
+        ...action.payload
       };
     default:
       return initialState;
@@ -32,13 +26,6 @@ const reducer = (alertState, action) => {
 
 export const AlertContextProvider = props => {
   const [alertState, alertDispatch] = useReducer(reducer, initialState);
-  
-  useEffect(() => {
-    console.log(alertState);
-    setTimeout(() => alertDispatch({
-      type: 'REMOVE_ALERT'
-    }), 6000);
-  }, [alertState]);
 
   return (
     <AlertContext.Provider value={[alertState, alertDispatch]}>
