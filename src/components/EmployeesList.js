@@ -13,9 +13,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function EmployeesList() {
   const [state, dispatch] = useContext(ProjectContext);
   const { workers } = state;
-  console.log(workers);
+
+  const handleRemove = e => {
+    const id = e.currentTarget.parentNode.parentNode.id
+    const confirm = window.confirm('Do you want to remove selected employee?');
+
+    if(!confirm) { return false; }
+    
+    dispatch({ type: 'REMOVE_WORKER', payload: { id } });
+  }
+
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} elevation={3}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -27,7 +36,7 @@ export default function EmployeesList() {
         </TableHead>
         <TableBody>
           {workers.map((row, index) => (
-            <TableRow key={row.id} >
+            <TableRow key={row.id} id={row.id} >
               <TableCell>{index + 1}</TableCell>
               <TableCell component="th" scope="row">
                 {row.name}
@@ -35,7 +44,7 @@ export default function EmployeesList() {
               <TableCell>{row.role}</TableCell>
               <TableCell>{row.email_address}</TableCell>
               <TableCell>
-                <IconButton>
+                <IconButton color="secondary" onClick={e => handleRemove(e)} >
                   <DeleteIcon aria-label="delete" />
                 </IconButton>
               </TableCell>

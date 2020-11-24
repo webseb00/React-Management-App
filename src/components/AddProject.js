@@ -10,6 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import { v4 as uuidv4 } from 'uuid';
 import { AlertContext } from '../context/AlertContext';
+import AddProjectEmployees from './AddProjectEmployees';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,24 @@ export default function AddProject() {
     project_client: '',
     project_details: ''
   });
+  // handle employees checkboxes
+  const [employees, setEmployees] = useState([]);
+
+  const handleEmployees = e => {
+    const { workers } = state;
+    const findInState = workers.find(el => el.name === e.target.name);
+    if(e.target.checked) {
+      setEmployees([
+        ...employees,
+        findInState
+      ]);
+    } else {
+      const removeUncheckedItem = employees.filter(el => el.name !== e.target.name);
+      setEmployees([
+        ...removeUncheckedItem
+      ]);
+    }
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -55,9 +74,9 @@ export default function AddProject() {
       startDate: startDate.toString(),
       endDate: endDate.toString(),
       completed: checked,
+      employees,
       id: uuidv4()
     }
-
     dispatch({ type: 'ADD_PROJECT', payload: data });
     // show alert message after adding project
     alertDispatch({
@@ -163,6 +182,9 @@ export default function AddProject() {
             label="Completed?"
           />
         </div>
+        <div className="form-row">
+          <AddProjectEmployees handleEmployees={handleEmployees} />
+        </div>
         <div className="form-row form-cta">
           <Button 
             variant="contained"
@@ -174,7 +196,6 @@ export default function AddProject() {
             variant="contained" 
             color="primary"
             type="submit"
-            disabled={false}
           >
             Save
           </Button>

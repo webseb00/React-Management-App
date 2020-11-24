@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import { AlertContext } from '../context/AlertContext';
+import EditProjectEmployees from './EditProjectEmployees';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ export default function EditProject(props) {
   const [state, dispatch] = useContext(ProjectContext);
   // alert context
   const [alertState, alertDispatch] = useContext(AlertContext);
-
+  
   useEffect(() => {
     const { projects } = state;
     const getProjectByID = projects.filter(el => el.id === id);
@@ -66,17 +67,37 @@ export default function EditProject(props) {
     project_details: ''
   });
 
+  // handle employees checkboxes
+  const [employees, setEmployees] = useState([]);
+
+  const handleEmployees = e => {
+    const { workers } = state;
+    const findInState = workers.find(el => el.name === e.target.name);
+    if(e.target.checked) {
+      setEmployees([
+        ...employees,
+        findInState
+      ]);
+    } else {
+      const removeUncheckedItem = employees.filter(el => el.name !== e.target.name);
+      setEmployees([
+        ...removeUncheckedItem
+      ]);
+    }
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
 
-    const newData = {
+    const data = {
       ...field,
       startDate: startDate.toString(),
       endDate: endDate.toString(),
-      completed: checked
+      completed: checked,
+      employees
     }
-
-    dispatch({ type: 'EDIT_PROJECT', payload: { ...newData, id} });
+    console.log(data);
+    dispatch({ type: 'EDIT_PROJECT', payload: { ...data, id} });
     // show alert message after adding project
     alertDispatch({
       type: 'SHOW_ALERT',
@@ -179,6 +200,12 @@ export default function EditProject(props) {
             />
           }
           label="Completed?"
+        />
+      </div>
+      <div className="form-row">
+        <EditProjectEmployees 
+          handleEmployees={handleEmployees} 
+          projectID={id}
         />
       </div>
       <div className="form-row form-cta">

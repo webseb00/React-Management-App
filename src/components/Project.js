@@ -17,6 +17,7 @@ export default function Project() {
   const [selectedProject, setProject] = useState();
   const [state, dispatch] = useContext(ProjectContext);
   const [alertState, alertDispatch] = useContext(AlertContext);
+  const [projectByTerm, setProjectByTerm] = useState(null);
 
   useEffect(() => {
     const { projects } = state;
@@ -24,22 +25,55 @@ export default function Project() {
     
     setProject(setFirstProject);
   }, [state]);
-
+  // search project by typed name
+  const handleSearch = e => {
+    const { projects } = state;
+    
+    if(e.target.value.length !== 0) {
+      const searchingTerm = e.target.value.toLowerCase();
+      const findProjectByTerm = projects.filter(el => el.project_name.toLowerCase().includes(searchingTerm));
+      setProjectByTerm(findProjectByTerm);
+    } else {
+      setProjectByTerm(null);
+    }
+  }
+  // find project by id
   const getProjectItemID = id => {
     const { projects } = state;
     const find = projects.filter(el => el.id === id);
     setProject(find[0]);
   }
-
+  // get all projects and generate item list
   const getProjectItems = () => {
     const { projects } = state;
-    return projects.map((el, index) => <ProjectItem 
+    console.log(projectByTerm);
+    const arr = projectByTerm ?? projects;
+    return arr.map((el, index) => <ProjectItem 
                                         getProjectID={getProjectItemID}
                                         key={el.id}
                                         id={el.id} 
                                         index={index} 
                                         {...el} 
                                       /> ); 
+    // if(projectByTerm && projectByTerm.length) {
+    //   // return only if user is searching project by name
+    //   return projectByTerm.map((el, index) => <ProjectItem 
+    //                                     getProjectID={getProjectItemID}
+    //                                     key={el.id}
+    //                                     id={el.id} 
+    //                                     index={index} 
+    //                                     {...el} 
+    //                                   /> ); 
+    // } else {
+    //   // return only if user is NOT searching project by name
+    //   return projects.map((el, index) => <ProjectItem 
+    //                                     getProjectID={getProjectItemID}
+    //                                     key={el.id}
+    //                                     id={el.id} 
+    //                                     index={index} 
+    //                                     {...el} 
+    //                                   /> ); 
+    // }
   }
 
   const removeSelectedProject = id => {
@@ -78,7 +112,7 @@ export default function Project() {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={4} md={3}>
           <Paper>
             <div className="project-findAndAdd">
               <Link to="/project/add">
@@ -92,8 +126,9 @@ export default function Project() {
               </Link>
               <TextField 
                 id="standard-basic" 
-                label="Filter" 
+                label="Search project" 
                 size="small"
+                onChange={handleSearch}
               />
             </div>
             <Divider />
@@ -102,10 +137,10 @@ export default function Project() {
             </List>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} sm={8} md={9}>
           <Paper>
             <ProjectDetails 
-              {...selectedProject} 
+              selectedProject={selectedProject}
               removeProject={removeSelectedProject} 
             />
           </Paper>
