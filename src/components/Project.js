@@ -46,7 +46,7 @@ export default function Project() {
   // get all projects and generate item list
   const getProjectItems = () => {
     const { projects } = state;
-    console.log(projectByTerm);
+    
     const arr = projectByTerm ?? projects;
     return arr.map((el, index) => <ProjectItem 
                                         getProjectID={getProjectItemID}
@@ -55,25 +55,6 @@ export default function Project() {
                                         index={index} 
                                         {...el} 
                                       /> ); 
-    // if(projectByTerm && projectByTerm.length) {
-    //   // return only if user is searching project by name
-    //   return projectByTerm.map((el, index) => <ProjectItem 
-    //                                     getProjectID={getProjectItemID}
-    //                                     key={el.id}
-    //                                     id={el.id} 
-    //                                     index={index} 
-    //                                     {...el} 
-    //                                   /> ); 
-    // } else {
-    //   // return only if user is NOT searching project by name
-    //   return projects.map((el, index) => <ProjectItem 
-    //                                     getProjectID={getProjectItemID}
-    //                                     key={el.id}
-    //                                     id={el.id} 
-    //                                     index={index} 
-    //                                     {...el} 
-    //                                   /> ); 
-    // }
   }
 
   const removeSelectedProject = id => {
